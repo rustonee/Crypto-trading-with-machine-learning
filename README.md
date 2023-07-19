@@ -12,13 +12,6 @@ Train a machine learning model using the data. In this case, LightGBM is utilize
 Utilize the trained model to predict the current candle's high price. If the predicted price is lower than the current open or close price, the bot waits for the next candle and repeats the process. Otherwise, it places a buy order.
 Finally, the bot waits for the price to rise until the predicted value is reached. If the prediction is not met by the end of the candle, it continues to wait until the prediction is eventually fulfilled.
 💻 Installation & Usage
-To get started, install Rust and clone this repository:
-
-$ git clone https://github.com/sleeyax/ml-crypto-trading-bot.git
-$ cd ml-crypto-trading-bot
-Copy
-Next, copy the configuration file and make the necessary edits (the file should be self-explanatory):
-
 $ cp config.example.yaml config.yaml
 $ vim config.yaml # or use any other text editor of your choice to modify the config file
 Copy
