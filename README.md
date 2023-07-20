@@ -1,50 +1,36 @@
-# :robot: ml-crypto-trading-bot
+Crypto Trading Algorithm
+This project is a cryptocurrency trading bot developed using Machine Learning and Rust. It draws inspiration from CyberPunkMetalHead/cryptocurrency-machine-learning-prediction-algo-trading.
 
-Cryptocurrency trading bot using Machine Learning and Rust. Inspired by [CyberPunkMetalHead/cryptocurrency-machine-learning-prediction-algo-trading](https://github.com/CyberPunkMetalHead/cryptocurrency-machine-learning-prediction-algo-trading).
+:warning: Disclaimer
+Please note that this bot was created as a response to another project and out of personal curiosity to build an improved version in Rust. The effectiveness of the trading strategy itself has not been extensively tested. Therefore, use this program at your own risk!
 
-## :warning: Disclaimer
+:book: Strategy
+The trading strategy employed by the bot is relatively straightforward:
 
-This bot has been developed in response to another project and out of curiousity to see if I could build an improved version in Rust. The efficiency of the strategy itself hasn't been thoroughly tested. Use this program at your own risk!
+Retrieve the most recent X days of hourly kline (candle) data from Binance.
+Train a machine learning model using the data. In this case, LightGBM is utilized, which is a fast gradient boosting framework that employs tree-based learning algorithms. While it may not be as accurate as other solutions like recurrent neural networks (RNN) such as LSTM, it has proven to be a reliable indicator for basic market movements (price increase or decrease) in testing, which is sufficient for this strategy.
+Utilize the trained model to predict the current candle's high price. If the predicted price is lower than the current open or close price, the bot waits for the next candle and repeats the process. Otherwise, it places a buy order.
+Finally, the bot waits for the price to rise until the predicted value is reached. If the prediction is not met by the end of the candle, it continues to wait until the prediction is eventually fulfilled.
+💻 Installation & Usage
+To get started, install Rust and clone this repository:
 
-## :book: Strategy
-
-The trading strategy is relatively simple:
-
-- Fetch the last X days of hourly kline (candle) data from Binance.
-- Train a machine learning model on the data. I'm using [LightGBM](https://lightgbm.readthedocs.io/en/v3.3.2/), which is a fast gradient boosting framework that uses tree based learning algorithms. It's not perfect and predictions aren't nearly as close to reality as other solutions like recurrent neural networks (RNN) like LSTM, but in my testing it can provide a good indicator for basic market movements (price up or down), which is all I need for this strategy.
-- Using the trained model, predict the current candle `high` price. If it's lower than the current `open` or `close` (i.e current) price, wait for the next candle and start over. Otherwise, place a buy order.
-- Finally, the bot waits for the price to go up until the the prediction is reached. If the prediction isn't reached by the end of the candle, it just waits until the prediction is reached eventually.
-
-## 💻 Installation & usage
-
-Install [Rust](https://www.rust-lang.org/tools/install) and clone this repository:
-
-```bash
 $ git clone https://github.com/sleeyax/ml-crypto-trading-bot.git
 $ cd ml-crypto-trading-bot
-```
+Copy
+Next, copy the configuration file and make the necessary edits (the file should be self-explanatory):
 
-Then, copy the config file and edit it accordingly (should be self-explanatory):
-
-```bash
 $ cp config.example.yaml config.yaml
-$ vim config.yaml # or use any other text editor of choice to edit the config file
-```
-
+$ vim config.yaml # or use any other text editor of your choice to modify the config file
+Copy
 To run the bot in development mode, execute:
 
-```bash
 $ RUST_LOG=debug cargo run
-```
-
+Copy
 To run the bot in production mode, execute:
 
-```bash
 $ RUST_LOG=info cargo run
-```
+Copy
+You can also build a release binary using cargo build -r and copy it, along with your config file, to a VPS or Raspberry Pi.
 
-You can also build a release binary with `cargo build -r` and copy it + your config file to a VPS or raspberry pi.
-
-## 📷 Screenshots
-<img width="1227" alt="image" src="https://user-images.githubusercontent.com/30344294/228659990-db8cf341-d8f1-4686-9ea9-3dd04cdb5fa4.png">
-
+📷 Screenshots
+Screenshot
